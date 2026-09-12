@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, ArrowUp } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './SocialIcons';
+
 import { MagneticButton } from './MagneticButton';
 
 export const Footer: React.FC = () => {
@@ -46,6 +47,16 @@ export const Footer: React.FC = () => {
             aria-label="LinkedIn Profile"
           >
             <LinkedinIcon className="w-4 h-4" />
+          </a>
+
+          <a
+            href="https://www.instagram.com/the_stranger._04?stkn=MWpvazltbDB4ZzBhNQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-pink-400 transition-colors"
+            aria-label="Instagram Profile"
+          >
+            <InstagramIcon className="w-4 h-4" />
           </a>
 
           <a

@@ -4,7 +4,8 @@ import { ArrowRight, Sparkles, FileDown } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
 import { Hero3DVisual } from './Hero3DVisual';
 import { HeroFloatingBadges } from './HeroFloatingBadges';
-import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './SocialIcons';
+
 
 interface HeroProps {
   onOpenResume: () => void;
@@ -151,6 +152,16 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
             >
               <LinkedinIcon className="w-4 h-4" />
               <span>LINKEDIN</span>
+            </a>
+            <span>•</span>
+            <a
+              href="https://www.instagram.com/the_stranger._04?stkn=MWpvazltbDB4ZzBhNQ=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-pink-400 transition-colors"
+            >
+              <InstagramIcon className="w-4 h-4 text-pink-400" />
+              <span>INSTAGRAM</span>
             </a>
             <span>•</span>
             <span className="text-zinc-400">JNTUH UCE</span>

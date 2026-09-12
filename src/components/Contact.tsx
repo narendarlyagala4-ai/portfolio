@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, Send, Copy, Check, MessageSquare } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from './SocialIcons';
 import { MagneticButton } from './MagneticButton';
 
 export const Contact: React.FC = () => {
@@ -115,14 +115,14 @@ export const Contact: React.FC = () => {
               <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block mb-4">
                 ONLINE PROFILES
               </span>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 <a
                   href="https://github.com/narendarlyagala4-ai"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 transition-all flex items-center gap-3 text-zinc-300 hover:text-white text-xs font-mono font-bold"
+                  className="p-3 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 transition-all flex items-center justify-center sm:justify-start gap-2.5 text-zinc-300 hover:text-white text-xs font-mono font-bold group"
                 >
-                  <GithubIcon className="w-4 h-4" />
+                  <GithubIcon className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors shrink-0" />
                   <span>GITHUB</span>
                 </a>
 
@@ -130,10 +130,20 @@ export const Contact: React.FC = () => {
                   href="https://linkedin.com/in/narendar-lyagala"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 transition-all flex items-center gap-3 text-zinc-300 hover:text-sky-400 text-xs font-mono font-bold"
+                  className="p-3 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 transition-all flex items-center justify-center sm:justify-start gap-2.5 text-zinc-300 hover:text-sky-400 text-xs font-mono font-bold group"
                 >
-                  <LinkedinIcon className="w-4 h-4 text-sky-400" />
+                  <LinkedinIcon className="w-4 h-4 text-sky-400 group-hover:scale-110 transition-transform shrink-0" />
                   <span>LINKEDIN</span>
+                </a>
+
+                <a
+                  href="https://www.instagram.com/the_stranger._04?stkn=MWpvazltbDB4ZzBhNQ=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 transition-all flex items-center justify-center sm:justify-start gap-2.5 text-zinc-300 hover:text-pink-400 text-xs font-mono font-bold group"
+                >
+                  <InstagramIcon className="w-4 h-4 text-pink-400 group-hover:scale-110 transition-transform shrink-0" />
+                  <span>INSTAGRAM</span>
                 </a>
               </div>
             </div>
