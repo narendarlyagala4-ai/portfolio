@@ -6,118 +6,15 @@ import {
   Award,
   CheckCircle2,
   ShieldCheck,
-  Upload,
-  Plus,
   X,
   FileText,
-  Trash2,
   Eye,
   ExternalLink,
   Download
 } from 'lucide-react';
-import { MagneticButton } from './MagneticButton';
-
-const STORAGE_KEY = 'narendar_uploaded_certificates';
 
 export const Certifications: React.FC = () => {
-  const [certs, setCerts] = useState<CertificationItem[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed: CertificationItem[] = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const customOnly = parsed.filter(c => c.isCustom);
-          return [...certificationsData, ...customOnly];
-        }
-      }
-    } catch {
-      // Fallback to base data if parsing error
-    }
-    return certificationsData;
-  });
-  const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [selectedCert, setSelectedCert] = useState<CertificationItem | null>(null);
-
-  // Form states for uploading
-  const [title, setTitle] = useState('');
-  const [issuer, setIssuer] = useState('');
-  const [skills, setSkills] = useState('');
-  const [fileData, setFileData] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string>('');
-  const [errorMsg, setErrorMsg] = useState('');
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setErrorMsg('');
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Check size limit (max 8MB for localStorage safety)
-    if (file.size > 8 * 1024 * 1024) {
-      setErrorMsg('File size must be under 8MB.');
-      return;
-    }
-
-    setFileName(file.name);
-    const reader = new FileReader();
-    reader.onload = () => {
-      setFileData(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleSaveCertificate = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim() || !issuer.trim()) {
-      setErrorMsg('Please enter both Certificate Title and Issuing Organization.');
-      return;
-    }
-
-    const skillsArray = skills
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-
-    const newCert: CertificationItem = {
-      id: `custom-${Date.now()}`,
-      title: title.trim(),
-      issuer: issuer.trim(),
-      skillsCovered: skillsArray.length > 0 ? skillsArray : ['Emerging Technologies', 'Applied Skills'],
-      badgeColor: 'from-cyan-500/20 to-indigo-500/20',
-      fileData: fileData || undefined,
-      fileName: fileName || undefined,
-      isCustom: true,
-    };
-
-    const updated = [...certs, newCert];
-    setCerts(updated);
-
-    // Persist custom certs
-    const customOnly = updated.filter(c => c.isCustom);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(customOnly));
-    } catch {
-      // Storage quota exceeded fallback
-    }
-
-    // Reset form
-    setTitle('');
-    setIssuer('');
-    setSkills('');
-    setFileData(null);
-    setFileName('');
-    setIsUploadOpen(false);
-  };
-
-  const handleDeleteCert = (id?: string) => {
-    if (!id) return;
-    const filtered = certs.filter(c => c.id !== id);
-    setCerts(filtered);
-    const customOnly = filtered.filter(c => c.isCustom);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(customOnly));
-    if (selectedCert?.id === id) {
-      setSelectedCert(null);
-    }
-  };
 
   return (
     <section id="certificates" className="relative w-full py-24 sm:py-32 px-6 sm:px-12 md:px-16 border-b border-zinc-800 bg-[#09090b]">
@@ -133,22 +30,17 @@ export const Certifications: React.FC = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <MagneticButton>
-              <button
-                onClick={() => setIsUploadOpen(true)}
-                className="flex items-center gap-2 px-5 py-3 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono tracking-wider uppercase font-bold transition-all shadow-sm cursor-pointer"
-              >
-                <Upload className="w-4 h-4 text-cyan-400" />
-                <span>UPLOAD CERTIFICATE</span>
-              </button>
-            </MagneticButton>
+          <div className="flex items-center gap-2">
+            <span className="px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 font-semibold flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4" />
+              <span>{certificationsData.length} Accredited Certifications</span>
+            </span>
           </div>
         </div>
 
         {/* Certificates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certs.map((cert, idx) => (
+          {certificationsData.map((cert, idx) => (
             <motion.div
               key={cert.id || cert.title}
               initial={{ opacity: 0, y: 25 }}
@@ -163,15 +55,6 @@ export const Certifications: React.FC = () => {
                     <Award className="w-5 h-5" />
                   </div>
                   <div className="flex items-center gap-2">
-                    {cert.isCustom && (
-                      <button
-                        onClick={() => handleDeleteCert(cert.id)}
-                        className="p-1.5 rounded-lg text-zinc-500 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
-                        title="Delete certificate"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
                     <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-semibold">
                       <ShieldCheck className="w-3.5 h-3.5" />
                       Verified
@@ -248,156 +131,8 @@ export const Certifications: React.FC = () => {
             </motion.div>
           ))}
 
-          {/* Dashed Add New Certificate Card in Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            onClick={() => setIsUploadOpen(true)}
-            className="p-8 rounded-3xl border-2 border-dashed border-zinc-800 hover:border-cyan-500/50 bg-[#121215]/40 hover:bg-[#121215] transition-all duration-300 flex flex-col items-center justify-center text-center cursor-pointer group min-h-[320px]"
-          >
-            <div className="w-14 h-14 rounded-2xl bg-zinc-900 border border-zinc-700 flex items-center justify-center text-zinc-400 group-hover:text-cyan-400 group-hover:border-cyan-500/40 group-hover:scale-110 transition-all mb-4">
-              <Plus className="w-7 h-7" />
-            </div>
-            <h4 className="font-display text-lg font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">
-              Upload Certificate
-            </h4>
-            <p className="font-outfit text-xs text-zinc-400 max-w-xs font-light">
-              Add your accredited course certificates, program completion letters, or specialization diplomas.
-            </p>
-          </motion.div>
         </div>
       </div>
-
-      {/* UPLOAD MODAL */}
-      <AnimatePresence>
-        {isUploadOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsUploadOpen(false)}
-              className="fixed inset-0 bg-black/85 backdrop-blur-md"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              role="dialog"
-              aria-modal="true"
-              className="relative w-full max-w-xl bg-[#0c0d12] border border-zinc-800 rounded-3xl shadow-2xl p-6 sm:p-8 z-10 space-y-6"
-            >
-              <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    <Upload className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-display text-xl font-bold text-white">Upload Certificate</h3>
-                    <p className="text-xs font-mono text-zinc-400">PDF or Images (JPG, PNG, WebP)</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setIsUploadOpen(false)}
-                  className="p-2 text-zinc-400 hover:text-white bg-zinc-900 rounded-xl border border-zinc-700 cursor-pointer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {errorMsg && (
-                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs font-mono text-rose-300">
-                  {errorMsg}
-                </div>
-              )}
-
-              <form onSubmit={handleSaveCertificate} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                    Certificate Title *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="e.g. Deep Learning Specialization"
-                    className="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-cyan-400 focus:outline-none text-sm text-white placeholder-zinc-500 font-outfit"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                    Issuing Organization / Platform *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={issuer}
-                    onChange={(e) => setIssuer(e.target.value)}
-                    placeholder="e.g. Coursera / Stanford, AWS, NPTEL"
-                    className="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-cyan-400 focus:outline-none text-sm text-white placeholder-zinc-500 font-outfit"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                    Key Competencies / Skills (Comma separated)
-                  </label>
-                  <input
-                    type="text"
-                    value={skills}
-                    onChange={(e) => setSkills(e.target.value)}
-                    placeholder="e.g. Neural Networks, PyTorch, Model Optimization"
-                    className="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-cyan-400 focus:outline-none text-sm text-white placeholder-zinc-500 font-outfit"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                    Upload Certificate Document / Image
-                  </label>
-                  <div className="relative border-2 border-dashed border-zinc-800 hover:border-cyan-500/40 rounded-2xl p-6 text-center cursor-pointer bg-zinc-900/30">
-                    <input
-                      type="file"
-                      accept=".pdf,image/png,image/jpeg,image/webp"
-                      onChange={handleFileChange}
-                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                    />
-                    <FileText className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
-                    <p className="text-xs font-mono text-zinc-200">
-                      {fileName ? (
-                        <span className="text-emerald-400 font-bold">{fileName}</span>
-                      ) : (
-                        'Click to browse or drag & drop PDF, PNG, JPG'
-                      )}
-                    </p>
-                    <p className="text-[10px] text-zinc-500 mt-1">Up to 8MB</p>
-                  </div>
-                </div>
-
-                <div className="pt-2 flex items-center justify-end gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setIsUploadOpen(false)}
-                    className="px-5 py-2.5 text-xs font-mono uppercase rounded-full text-zinc-400 hover:text-white border border-zinc-800 cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-6 py-2.5 text-xs font-mono font-bold uppercase rounded-full bg-white text-black hover:bg-zinc-200 transition-colors cursor-pointer"
-                  >
-                    Save Certificate
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       {/* CERTIFICATE PREVIEW MODAL */}
       <AnimatePresence>
