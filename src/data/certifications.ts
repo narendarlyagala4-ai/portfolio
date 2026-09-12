@@ -89,6 +89,21 @@ export const certificationsData: CertificationItem[] = [
     badgeColor: 'from-orange-500/20 to-red-500/20',
     fileData: '/certificates/databricks-generative-ai-fundamentals.pdf',
     fileName: 'Databricks_Generative_AI_Fundamentals.pdf'
+  },
+  {
+    id: 'cert-tata-data-viz',
+    title: 'Data Visualisation: Empowering Business with Effective Insights',
+    issuer: 'Tata – Forage',
+    skillsCovered: [
+      'Framing the Business Scenario',
+      'Choosing the Right Visuals',
+      'Creating Effective Visuals',
+      'Communicating Insights & Analysis',
+      'Data Storytelling & Executive Reporting'
+    ],
+    badgeColor: 'from-cyan-600/20 to-blue-600/20',
+    fileData: '/certificates/tata-data-visualisation.pdf',
+    fileName: 'Tata_Data_Visualisation_Empowering_Business.pdf'
   }
 ];
 

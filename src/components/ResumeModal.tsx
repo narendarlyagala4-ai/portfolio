@@ -1,6 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Printer, GraduationCap, Briefcase, Award, CheckCircle, Mail, Phone } from 'lucide-react';
+import {
+  X,
+  Printer,
+  GraduationCap,
+  Briefcase,
+  Award,
+  CheckCircle,
+  Mail,
+  Phone,
+  Download,
+  ExternalLink,
+  FileText
+} from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 
 interface ResumeModalProps {
@@ -9,6 +21,8 @@ interface ResumeModalProps {
 }
 
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
+  const [activeTab, setActiveTab] = useState<'pdf' | 'web'>('pdf');
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -33,7 +47,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -52,28 +66,65 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           transition={{ duration: 0.3 }}
           role="dialog"
           aria-modal="true"
-          className="relative w-full max-w-4xl max-h-[90vh] bg-[#0c0d12] border border-zinc-800 rounded-3xl shadow-2xl flex flex-col z-10 overflow-hidden"
+          className="relative w-full max-w-5xl max-h-[92vh] bg-[#0c0d12] border border-zinc-800 rounded-3xl shadow-2xl flex flex-col z-10 overflow-hidden"
         >
           {/* Header Action Bar */}
-          <div className="flex items-center justify-between p-5 sm:p-6 border-b border-zinc-800 bg-[#121215]">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20 uppercase tracking-wider">
-                CURRICULUM VITAE
+          <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-5 border-b border-zinc-800 bg-[#121215] gap-3">
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
+              <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20 uppercase tracking-wider flex items-center gap-1.5">
+                <FileText className="w-3.5 h-3.5" />
+                <span>RESUME</span>
               </span>
-              <span className="text-xs text-zinc-400 font-mono hidden sm:inline">• NARENDAR LYAGALA</span>
+
+              {/* View Mode Toggle */}
+              <div className="flex items-center gap-1 p-1 bg-zinc-900 rounded-xl border border-zinc-800">
+                <button
+                  onClick={() => setActiveTab('pdf')}
+                  className={`px-3 py-1 text-xs font-mono font-bold rounded-lg transition-all cursor-pointer ${
+                    activeTab === 'pdf'
+                      ? 'bg-cyan-400 text-black shadow-sm'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  OFFICIAL PDF
+                </button>
+                <button
+                  onClick={() => setActiveTab('web')}
+                  className={`px-3 py-1 text-xs font-mono font-bold rounded-lg transition-all cursor-pointer ${
+                    activeTab === 'web'
+                      ? 'bg-cyan-400 text-black shadow-sm'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  WEB CV
+                </button>
+              </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handlePrint}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-black text-xs font-mono font-bold uppercase hover:bg-zinc-200 transition-colors cursor-pointer"
+            <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+              <a
+                href="/resume/Narendar_Lyagala_Resume.pdf"
+                download="Narendar_Lyagala_Resume.pdf"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black text-xs font-mono font-bold uppercase hover:bg-zinc-200 transition-colors cursor-pointer shadow-sm"
               >
-                <Printer className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">PRINT / SAVE PDF</span>
-              </button>
+                <Download className="w-3.5 h-3.5" />
+                <span>DOWNLOAD PDF</span>
+              </a>
+
+              <a
+                href="/resume/Narendar_Lyagala_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 text-zinc-400 hover:text-white bg-zinc-900 rounded-xl border border-zinc-700 hover:border-zinc-500 transition-colors"
+                title="Open PDF in new tab"
+                aria-label="Open PDF in new tab"
+              >
+                <ExternalLink className="w-4 h-4" />
+              </a>
+
               <button
                 onClick={onClose}
-                className="p-2 text-zinc-400 hover:text-white bg-zinc-900 rounded-xl border border-zinc-700 transition-colors cursor-pointer"
+                className="p-2 text-zinc-400 hover:text-white bg-zinc-900 rounded-xl border border-zinc-700 hover:border-zinc-500 transition-colors cursor-pointer"
                 aria-label="Close resume view"
               >
                 <X className="w-4 h-4" />
@@ -81,8 +132,20 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
 
-          {/* Printable / Viewable Resume Document Body */}
-          <div className="p-6 sm:p-10 overflow-y-auto space-y-8 font-outfit text-zinc-300 text-xs sm:text-sm print:bg-white print:text-black">
+          {/* Conditional Body: Official PDF Viewer or Styled Web CV */}
+          {activeTab === 'pdf' ? (
+            <div className="flex-1 p-3 sm:p-5 overflow-hidden bg-black/60 flex flex-col items-center justify-center">
+              <div className="w-full h-[72vh] rounded-2xl border border-zinc-800 overflow-hidden bg-zinc-900 shadow-2xl relative">
+                <iframe
+                  src="/resume/Narendar_Lyagala_Resume.pdf#toolbar=1&navpanes=0"
+                  title="Narendar Lyagala Official Resume"
+                  className="w-full h-full border-0 rounded-2xl"
+                />
+              </div>
+            </div>
+          ) : (
+            /* Printable / Viewable Resume Document Body */
+            <div className="p-6 sm:p-10 overflow-y-auto space-y-8 font-outfit text-zinc-300 text-xs sm:text-sm print:bg-white print:text-black">
             {/* Header Identity */}
             <div className="text-center pb-6 border-b border-zinc-800">
               <h1 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
@@ -328,18 +391,56 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                     [View PDF ↗]
                   </a>
                 </li>
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <span><strong>Data Visualisation: Empowering Business with Effective Insights</strong> — Tata (Forage)</span>
+                  </div>
+                  <a
+                    href="/certificates/tata-data-visualisation.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 underline ml-6 sm:ml-0 shrink-0"
+                  >
+                    [View PDF ↗]
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
+        )}
 
           {/* Modal Footer */}
-          <div className="p-5 border-t border-zinc-800 bg-[#121215] flex items-center justify-end">
-            <button
-              onClick={onClose}
-              className="px-6 py-2.5 text-xs font-mono font-bold uppercase rounded-full bg-white text-black hover:bg-zinc-200 transition-all cursor-pointer"
-            >
-              CLOSE
-            </button>
+          <div className="p-4 sm:p-5 border-t border-zinc-800 bg-[#121215] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-mono text-zinc-400">Narendar Lyagala • AI & ML Engineer</span>
+              <a
+                href="/resume/Narendar_Lyagala_Resume.pdf"
+                download="Narendar_Lyagala_Resume.pdf"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 underline"
+              >
+                <Download className="w-3 h-3" />
+                <span>Download Official PDF</span>
+              </a>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {activeTab === 'web' && (
+                <button
+                  onClick={handlePrint}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white text-xs font-mono font-bold uppercase transition-colors cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>PRINT</span>
+                </button>
+              )}
+              <button
+                onClick={onClose}
+                className="px-6 py-2.5 text-xs font-mono font-bold uppercase rounded-full bg-white text-black hover:bg-zinc-200 transition-all cursor-pointer"
+              >
+                CLOSE
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>
