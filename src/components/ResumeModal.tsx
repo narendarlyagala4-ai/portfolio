@@ -271,10 +271,20 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 </div>
 
                 <div>
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between">
-                    <h3 className="font-display font-bold text-white text-base">
-                      E-Commerce Business Intelligence Dashboard
-                    </h3>
+                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-display font-bold text-white text-base">
+                        E-Commerce Business Intelligence Dashboard
+                      </h3>
+                      <a
+                        href="https://dashboard-j38p.vercel.app/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 underline inline-flex items-center gap-0.5"
+                      >
+                        [Live Dashboard ↗]
+                      </a>
+                    </div>
                     <span className="text-[11px] font-mono text-cyan-400">Python, SQL, Power BI, DAX, ETL</span>
                   </div>
                   <ul className="list-disc list-inside mt-2 space-y-1 text-zinc-400 text-xs font-light">
@@ -327,12 +337,12 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                     <span><strong>Data Analytics Job Simulation</strong> — Deloitte (Forage)</span>
                   </div>
                   <a
-                    href="/certificates/deloitte-data-analytics.jpg"
+                    href="/certificates/deloitte-data-analytics.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 underline ml-6 sm:ml-0 shrink-0"
                   >
-                    [View Certificate ↗]
+                    [View PDF ↗]
                   </a>
                 </li>
                 <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
@@ -398,6 +408,34 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                   </div>
                   <a
                     href="/certificates/tata-data-visualisation.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 underline ml-6 sm:ml-0 shrink-0"
+                  >
+                    [View PDF ↗]
+                  </a>
+                </li>
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <span><strong>Data Science Job Simulation</strong> — BCG X (Forage)</span>
+                  </div>
+                  <a
+                    href="/certificates/bcg-x-data-science.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 underline ml-6 sm:ml-0 shrink-0"
+                  >
+                    [View PDF ↗]
+                  </a>
+                </li>
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <span><strong>Software Engineering Job Simulation</strong> — Commonwealth Bank (Forage)</span>
+                  </div>
+                  <a
+                    href="/certificates/commonwealth-bank-software-engineering.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[10px] font-mono text-cyan-400 hover:text-cyan-300 underline ml-6 sm:ml-0 shrink-0"

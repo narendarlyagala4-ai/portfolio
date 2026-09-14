@@ -69,6 +69,7 @@ export const projectsData: Project[] = [
     subtitle: 'End-to-End Analytics & Decision Support Platform',
     category: 'Business Intelligence',
     type: 'bi',
+    liveUrl: 'https://dashboard-j38p.vercel.app/',
     description: 'An end-to-end business intelligence platform that transforms raw e-commerce data into actionable business insights.',
     details: [
       'Python ETL pipeline',

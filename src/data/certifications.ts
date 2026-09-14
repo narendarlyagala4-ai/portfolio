@@ -42,8 +42,38 @@ export const certificationsData: CertificationItem[] = [
       'Data Storytelling'
     ],
     badgeColor: 'from-emerald-500/20 to-teal-500/20',
-    fileData: '/certificates/deloitte-data-analytics.jpg',
-    fileName: 'Deloitte_Data_Analytics_Simulation.jpg'
+    fileData: '/certificates/deloitte-data-analytics.pdf',
+    fileName: 'Deloitte_Data_Analytics_Simulation.pdf'
+  },
+  {
+    id: 'cert-bcg-ds',
+    title: 'Data Science Job Simulation',
+    issuer: 'BCG X – Forage',
+    skillsCovered: [
+      'Business Problem Framing',
+      'Exploratory Data Analysis (EDA)',
+      'Data Cleaning & Preprocessing',
+      'Feature Engineering',
+      'ML Modeling & Evaluation'
+    ],
+    badgeColor: 'from-emerald-600/20 to-teal-600/20',
+    fileData: '/certificates/bcg-x-data-science.pdf',
+    fileName: 'BCG_X_Data_Science_Simulation.pdf'
+  },
+  {
+    id: 'cert-cba-swe',
+    title: 'Software Engineering Job Simulation',
+    issuer: 'Commonwealth Bank – Forage',
+    skillsCovered: [
+      '.NET Backend Development',
+      'React & Redux Frontend',
+      'Client Feature Engineering',
+      'Unit Testing & Code Coverage',
+      'Git Pull Requests & Collaboration'
+    ],
+    badgeColor: 'from-amber-500/20 to-yellow-500/20',
+    fileData: '/certificates/commonwealth-bank-software-engineering.pdf',
+    fileName: 'Commonwealth_Bank_Software_Engineering_Simulation.pdf'
   },
   {
     id: 'cert-ba-ds',
